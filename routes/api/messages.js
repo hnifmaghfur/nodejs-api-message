@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const bodyParser = require('body-parser');
+const wssBroadcast = require('../websocket/websocket').broadcast;
+const router = express.Router();
 
 // storage penyimpanan untuk menampung message yang masuk
 let obj = {
