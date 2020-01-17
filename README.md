@@ -40,6 +40,8 @@ curl --location --request POST 'http://localhost:8123/messages' \
 ```
 
 tinggal ganti **message** dengan pesan yang diinginkan 
+harus menggunakan `double quotation mark " "` untuk content-type nya json
+bisa menggunakan `double quotation mark ataupun single quotation mark ' ' ` 
 
 ### Get
 
