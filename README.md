@@ -1,12 +1,18 @@
 # nodejs-api-message
 
-Install dependencies.
+## Install dependencies.
 
-`npm install`
+`$ npm install`
 
-jalankan project
+## jalankan project
 
-`npm start`
+`$ npm start`
+
+## Testing 
+
+script berada di `tes/messages.test.js`
+
+Run : `$ npm test`
 
 ## test function
 
@@ -52,12 +58,16 @@ curl --location --request GET 'http://localhost:8123/messages' \
 
 ### websocket
 
-buka link di bawah ini di browser
+gunakan console pada browser google chrome
 
-`localhost:8123/`
+salin script do bawah ini
 
-browser nya akan secara otomatis keluar message yang masuk
-
-
+```
+let c = new WebSocket('ws://localhost:8123/ws');
+c.onmessage = (msg) => {
+	let data = JSON.parse(msg.data);
+	console.log(data);
+};
+```
 
 # Semoga bermanfaat

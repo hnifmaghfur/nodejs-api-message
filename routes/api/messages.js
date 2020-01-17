@@ -56,7 +56,10 @@ router.post('/', (req, res) => {
     default:
       break;
   }
-  res.status(200).send('pesan diterima'); // respon status 200 berarti sukses
+  res.status(201).send({
+    code: 201,
+    message: "Sent"
+  }); // respon status 201 sukses create message ke storage
 });
 
 module.exports = router;
