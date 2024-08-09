@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    if: github.event.push.base.ref == 'master'
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout code
