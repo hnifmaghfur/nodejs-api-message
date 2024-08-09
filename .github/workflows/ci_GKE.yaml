@@ -1,0 +1,29 @@
+name: CI to GKE
+
+on:
+  push:
+    branches:
+      - master  # Trigger on push to the master branch
+  pull_request:
+    branches:
+      - master  # Trigger on pull request to the master branch
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.base.ref == 'master'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test

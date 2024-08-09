@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-api-deployment
+  labels:
+    app: nodejs-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-api
+  template:
+    metadata:
+      labels:
+        app: nodejs-api
+    spec:
+      containers:
+      - name: nodejs-api
+        image: ghcr.io/hnifmaghfur/nodejs-api-message-server:latest
+        imagePullPolicy: Always
+        env:
+        - name: version
+          value: "v2"
+        ports:
+        - containerPort: 812
+         # Readiness Probe
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8123
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+        # Liveness Probe
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: 8123
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: ghcr-registry-secret
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-api-service
+spec:
+  selector:
+    app: nodejs-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8123
+  type: LoadBalancer
